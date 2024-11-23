@@ -1,7 +1,13 @@
+import os from "os";
 import express from "express";
 import multer from "multer";
-import os from "os";
+import cors from "cors";
 import controllers from "../controllers/posts.js";
+
+const corsOption = {
+    origin: "http://localhost:8000",
+    optionsSuccessStatus: 200
+}
 
 let upload;
 
@@ -25,6 +31,7 @@ if (os.platform() === "win32") {
 
 const routes = (app) => {
     app.use(express.json());
+    app.use(cors(corsOption));
 
     app.get("/posts", controllers.listPosts);
     app.post("/posts", controllers.newPost);
